@@ -5,8 +5,8 @@ services:
     container_name: mysqld
     volumes:
       - ./data:/var/lib/mysql
-      - ./log:/var/log/mysql
       - ./mysqld:/var/run/mysqld
+      - ./mysqld/log:/var/log/mysql
       - ./my.cnf:/etc/mysql/my.cnf
     ports:
       - 127.0.0.1:3306:3306
