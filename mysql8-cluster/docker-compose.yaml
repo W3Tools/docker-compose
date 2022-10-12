@@ -2,7 +2,6 @@ version: '3.0'
 services:
   mysql-master:
     image: mysql:${IMAGE_VERSION}
-    privileged: true
     container_name: mysql-master
     volumes:
       - ./data-master:/var/lib/mysql
@@ -20,7 +19,6 @@ services:
 
   mysql-slave:
     image: mysql:${IMAGE_VERSION}
-    privileged: true
     container_name: mysql-slave
     ports:
      - ${SLAVE_PORT}:3306
