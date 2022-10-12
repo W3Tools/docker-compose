@@ -4,8 +4,8 @@ services:
     image: mysql:${IMAGE_VERSION}
     container_name: mysql-master
     volumes:
-      - ./data-master:/var/lib/mysql
-      - ./mysqld-master:/var/run/mysqld
+      - ./data/master:/var/lib/mysql
+      - ./mysqld/master:/var/run/mysqld
       - ./conf/my.cnf-master:/etc/my.cnf
     ports:
      - ${MASTER_PORT}:3306
@@ -25,8 +25,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: ${SLAVE_PASSWORD}
     volumes:
-      - ./data-slave:/var/lib/mysql
-      - ./mysqld-slave:/var/run/mysqld
+      - ./data/slave:/var/lib/mysql
+      - ./mysqld/slave:/var/run/mysqld
       - ./conf/my.cnf-slave:/etc/my.cnf
     restart: always
     networks:
