@@ -1,0 +1,42 @@
+version: '3.0'
+services:
+  mysql-master:
+    image: mysql:8.0.30
+    privileged: true
+    container_name: mysql-master
+    volumes:
+      - ./data-master:/var/lib/mysql
+      - ./mysqld-master:/var/run/mysqld
+      - ./conf/my.cnf-master:/etc/my.cnf
+    ports:
+     - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    restart: always
+    networks:
+      mysql-cluster:
+        aliases:
+          - mysql-master
+
+  mysql-slave:
+    image: mysql:8.0.30
+    privileged: true
+    container_name: mysql-slave
+    ports:
+     - 3307:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - ./data-slave:/var/lib/mysql
+      - ./mysqld-slave:/var/run/mysqld
+      - ./conf/my.cnf-slave:/etc/my.cnf
+    restart: always
+    networks:
+      mysql-cluster:
+        aliases:
+          - mysql-slave
+
+networks:
+  mysql-cluster:
+    name: mysql-cluster
+    driver: bridge
