@@ -1,0 +1,40 @@
+version: '3.0'
+services:
+  gogs-mysql:
+    image: mysql:${IMAGE_VERSION}
+    container_name: gogs-mysql
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./mysqld:/var/run/mysqld
+      - ./my.cnf:/etc/mysql/my.cnf
+    ports:
+      - ${MYSQL_PORT}:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_USER: ${MYSQL_GOGS_USER}
+      MYSQL_PASSWORD: ${MYSQL_GOGS_PASSWORD}
+      MYSQL_DATABASE: ${GOGS_DATABASE}
+    restart: always
+    networks:
+      gogs-hub:
+        aliases:
+          - gogs-mysql
+
+  gogs:
+    image: gogs/gogs:${GOGS_VERSION}
+    container_name: gogs
+    ports:
+      - ${GOGS_PORT}:3000
+      - ${GOGS_SSH_PORT}:22
+    volumes:
+      - ./gogs:/data
+    restart: always
+    networks:
+      gogs-hub:
+        aliases:
+          - gogs
+
+networks:
+  gogs-hub:
+    name: gogs-hub
+    driver: bridge
