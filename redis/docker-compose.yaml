@@ -1,0 +1,13 @@
+version: '3.5'
+services:
+  redisd:
+    image: redis:${IMAGE_VERSION}
+    container_name: redisd
+    volumes:
+      - ./data:/data
+      - ./redis.conf:/etc/redis/redis.conf
+      - ./logs:/logs
+    ports:
+      - ${REDIS_PORT}:6379
+    command: redis-server /etc/redis/redis.conf --requirepass ${REDIS_PASSWORD}
+    restart: always
