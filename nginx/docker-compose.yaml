@@ -1,0 +1,25 @@
+version: "3"
+services:
+  nginx:
+    image: nginx:stable-alpine
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/.conf:/etc/nginx/.conf
+      - ./conf/conf.d:/etc/nginx/conf.d
+      - ./webroot:/etc/nginx/webroot
+      - ./cert:/etc/nginx/cert
+      - ./log:/var/log/nginx
+    networks:
+      nginx_net:
+        aliases:
+          - nginx
+
+networks:
+  nginx_net:
+    name: nginx_net
+    driver: bridge
