@@ -14,7 +14,6 @@ services:
       - ./conf/conf.d:/etc/nginx/conf.d
       - ./webroot:/etc/nginx/webroot
       - ./letsencrypt:/etc/letsencrypt
-      - ./cert:/etc/nginx/cert
       - ./log:/var/log/nginx
     networks:
       nginx_net:

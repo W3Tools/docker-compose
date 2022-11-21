@@ -18,10 +18,11 @@ docker compose exec nginx nginx -s reload # reload nginx
 
 ## create ssl certificate
 ```
-certbot certonly --webroot --webroot-path /data/tmp/docker-compose/nginx/webroot/letsencrypt --domains <domain name>
+docker compose exec nginx certbot certonly --webroot --webroot-path /etc/nginx/webroot/letsencrypt --domains <domain name>
+# certbot certonly --webroot --webroot-path /data/tmp/docker-compose/nginx/webroot/letsencrypt --domains <domain name>
 ```
 
-## SSL certificate hardwired
+## SSL certificate hardwired <deprecated>
 ```
 ln -f /etc/letsencrypt/live/<domain name>/fullchain.pem ./cert/<domain name>.pem
 ln -f /etc/letsencrypt/live/<domain name>/privkey.pem ./cert/<domain name>.key
