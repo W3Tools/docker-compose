@@ -1,7 +1,8 @@
 version: "3"
 services:
   nginx:
-    image: nginx:stable-alpine
+    build: ./build
+    image: nginx
     container_name: nginx
     restart: always
     ports:
@@ -12,6 +13,7 @@ services:
       - ./conf/.conf:/etc/nginx/.conf
       - ./conf/conf.d:/etc/nginx/conf.d
       - ./webroot:/etc/nginx/webroot
+      - ./letsencrypt:/etc/letsencrypt
       - ./cert:/etc/nginx/cert
       - ./log:/var/log/nginx
     networks:
