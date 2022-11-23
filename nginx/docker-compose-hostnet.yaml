@@ -1,0 +1,18 @@
+version: '3.0'
+services:
+  nginx:
+    build: ./build
+    image: nginx
+    container_name: nginx
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf/nginx.conf:/etc/nginx/nginx.conf
+      - ./conf/.conf:/etc/nginx/.conf
+      - ./conf/conf.d:/etc/nginx/conf.d
+      - ./webroot:/etc/nginx/webroot
+      - ./letsencrypt:/etc/letsencrypt
+      - ./log:/var/log/nginx
+    network_mode: "host"
