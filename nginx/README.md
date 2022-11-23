@@ -7,6 +7,7 @@ git clone https://github.com/W3Tools/docker-compose.git && cd docker-compose/ngi
 
 ## startup nginx
 ```
+docker compose build
 docker compose up -d
 ```
 
@@ -19,11 +20,4 @@ docker compose exec nginx nginx -s reload # reload nginx
 ## create ssl certificate
 ```
 docker compose exec nginx certbot certonly --webroot --webroot-path /etc/nginx/webroot/letsencrypt --domains <domain name>
-# certbot certonly --webroot --webroot-path /data/tmp/docker-compose/nginx/webroot/letsencrypt --domains <domain name>
-```
-
-## SSL certificate hardwired <deprecated>
-```
-ln -f /etc/letsencrypt/live/<domain name>/fullchain.pem ./cert/<domain name>.pem
-ln -f /etc/letsencrypt/live/<domain name>/privkey.pem ./cert/<domain name>.key
 ```
