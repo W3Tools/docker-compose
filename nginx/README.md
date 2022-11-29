@@ -11,6 +11,11 @@ docker compose build
 docker compose up -d
 ```
 
+# startup nginx with host network
+```
+docker compose -f docker-compose-hostnet.yaml up -d
+```
+
 ## add website
 ```
 cp conf/conf.d/config.example conf/conf.d/<website name>.conf # copy config file and modify
