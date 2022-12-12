@@ -1,0 +1,19 @@
+version: '3.0'
+services:
+  openresty:
+    build: ./build
+    image: openresty
+    container_name: openresty
+    restart: always
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - ./conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - ./conf/.conf:/usr/local/openresty/nginx/conf/.conf
+      - ./conf/conf.d:/usr/local/openresty/nginx/conf/conf.d
+      - ./conf/stream.conf:/usr/local/openresty/nginx/conf/stream.conf
+      - ./webroot:/usr/local/openresty/nginx/webroot
+      - ./letsencrypt:/etc/letsencrypt
+      - ./log:/var/log/nginx
+    network_mode: "host"
