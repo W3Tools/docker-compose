@@ -5,6 +5,10 @@ services:
     image: nginx
     container_name: nginx
     restart: always
+    ulimits:
+      nofile:
+        soft: 204800
+        hard: 204800
     ports:
       - 80:80
       - 443:443
