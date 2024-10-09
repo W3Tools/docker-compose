@@ -7,7 +7,7 @@ git clone https://github.com/W3Tools/docker-compose.git && cd docker-compose/ngi
 
 ## generate ssl
 ```
-openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout conf/.conf/ssl/nginx.key -out conf/.conf/ssl/nginx.crt
+openssl req -x509 -nodes -days 3650 -newkey rsa:4096 -keyout conf/.conf/nginx.key -out conf/.conf/nginx.crt
 ```
 
 ## startup nginx
