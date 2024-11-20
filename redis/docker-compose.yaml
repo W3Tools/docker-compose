@@ -1,4 +1,3 @@
-version: '3.0'
 services:
   redisd:
     image: redis:${IMAGE_VERSION}
