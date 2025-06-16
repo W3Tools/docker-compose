@@ -1,0 +1,61 @@
+services:
+    prometheus:
+        image: prom/prometheus:${PROMETHEUS_VERSION}
+        container_name: prometheus
+        volumes:
+            - ./data/prometheus:/prometheus
+            - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+            - ./prometheus/alerts.yml:/etc/prometheus/alerts.yml
+            - ./prometheus/alert.rules:/etc/prometheus/alert.rules
+        ports:
+            - "${PROMETHEUS_LISTEN_ADDRESS}:9090"
+        command:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+        restart: unless-stopped
+        mem_limit: 512m
+        cpus: 0.5
+
+    grafana:
+        image: grafana/grafana:${GRAFANA_VERSION}
+        container_name: grafana
+        ports:
+            - "${GRAFANA_LISTEN_ADDRESS}:3000"
+        volumes:
+            - ./data/grafana:/var/lib/grafana
+            - ./grafana/provisioning:/etc/grafana/provisioning
+        environment:
+            - GF_SECURITY_ADMIN_USER=${GRAFANA_ADMIN_USER}
+            - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_ADMIN_PASSWORD}
+        restart: unless-stopped
+        mem_limit: 256M
+        cpus: 0.3
+
+    alertmanager:
+        image: prom/alertmanager:${ALERTMANAGER_VERSION}
+        container_name: alertmanager
+        volumes:
+            - ./alertmanager/config.yml:/etc/alertmanager/config.yml
+        ports:
+            - "${ALERTMANAGER_LISTEN_ADDRESS}:9093"
+        restart: unless-stopped
+        mem_limit: 128M
+        cpus: 0.2
+
+    # this node exporter collects metrics from the host system, pid: host!
+    node_exporter:
+        image: prom/node-exporter:${NODE_EXPORTER_VERSION}
+        container_name: node_exporter
+        ports:
+            - "${NODE_EXPORTER_LISTEN_ADDRESS}:9100"
+        pid: "host"
+        volumes:
+            - /proc:/host/proc:ro
+            - /sys:/host/sys:ro
+            - /:/rootfs:ro
+        command:
+            - "--path.procfs=/host/proc"
+            - "--path.sysfs=/host/sys"
+            - "--path.rootfs=/rootfs"
+        restart: unless-stopped
+        mem_limit: 128M
+        cpus: 0.2

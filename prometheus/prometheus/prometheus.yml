@@ -1,0 +1,16 @@
+global:
+    scrape_interval: 15s
+
+rule_files:
+    - "alerts.yml"
+    - "alert.rules"
+
+alerting:
+    alertmanagers:
+        - static_configs:
+              - targets: ["alertmanager:9093"]
+
+scrape_configs:
+    - job_name: "node-exporter"
+      static_configs:
+          - targets: ["node_exporter:9100"]

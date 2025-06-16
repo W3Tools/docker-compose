@@ -1,0 +1,23 @@
+global:
+    resolve_timeout: 5m
+
+route:
+    receiver: "telegram-alert"
+    group_wait: 10s
+    group_interval: 30s
+    repeat_interval: 1h
+
+receivers:
+    - name: "telegram-alert"
+      telegram_configs:
+          - bot_token: "YOUR_BOT_TOKEN"
+            chat_id: -1000000000000 #
+            parse_mode: HTML
+            message: |
+                <b>🔥 AlertManager</b>
+                <b>Status:</b> {{ .Status }}
+                <b>Alert:</b> {{ range .Alerts }}{{ .Annotations.summary }} - {{ .Labels.severity }}  
+                <b>Description:</b> {{ .Annotations.description }}
+                <b>Instance:</b> {{ .Labels.instance }}
+                <b>StartAt:</b> {{ .StartsAt }}
+                {{ end }}
