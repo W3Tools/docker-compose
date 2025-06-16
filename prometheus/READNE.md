@@ -1,7 +1,7 @@
 # 1. Create directories to store data for prometheus and grafana
 
 ```
-mkdir ./data/grafana ./data/prometheus
+mkdir -p ./data/grafana ./data/prometheus
 ```
 
 # 2. Change ownership of directories
