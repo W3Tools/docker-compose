@@ -23,6 +23,20 @@ services:
         aliases:
           - nginx
 
+  nginx-exporter:
+    image: nginx/nginx-prometheus-exporter:latest
+    container_name: nginx-exporter
+    command:
+      - --nginx.scrape-uri=http://nginx:61080/nginx_status
+    ports:
+      - "9113:9113"
+    depends_on:
+      - nginx
+    networks:
+      nginx_net:
+        aliases:
+          - nginx-exporter
+
 networks:
   nginx_net:
     name: nginx_net
